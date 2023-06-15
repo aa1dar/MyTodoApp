@@ -23,4 +23,4 @@
 * Set a deadline for the task
 
 ## Download
-<a href="https://github.com/aa1dar/TodoApp/releases">Tap me )<a>
+<a href="https://github.com/aa1dar/MyTodoApp/releases/tag/1.0.0">Tap me )<a>
