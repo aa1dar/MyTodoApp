@@ -13,6 +13,7 @@
   <img src="screenshots/screenshot2.jpg" width="200" />
   <img src="screenshots/screenshot3.jpg" width="200" />
   <img src="screenshots/screenshot4.jpg" width="200" />
+  <img src="screenshots/screenshot5.jpg" width="200" />
 </p>
 
 ## Features
@@ -22,5 +23,9 @@
 * Prioritize tasks
 * Set a deadline for the task
 
+## New features
+* Now the data is saved in local storage
+* After launch data load to remote storage
+
 ## Download
-<a href="https://github.com/aa1dar/MyTodoApp/releases/tag/1.0.0">Tap me )<a>
+<a href="https://github.com/aa1dar/MyTodoApp/releases/tag/1.0.1">Tap me )<a>
