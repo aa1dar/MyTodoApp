@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
-import 'package:intl/intl_standalone.dart';
 import 'package:todo_app/l10n/l10n.dart';
 import 'package:todo_app/navigation/navigation_logger.dart';
 import 'package:todo_app/navigation/navigation_routes.dart';

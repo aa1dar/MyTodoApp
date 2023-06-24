@@ -4,7 +4,6 @@ import 'package:intl/intl.dart';
 import 'package:todo_app/models/task_model.dart';
 import 'package:todo_app/models/task_priority.dart';
 import 'package:todo_app/providers/task_list_provider.dart';
-import 'package:todo_app/utils/extensions/extensions.dart';
 import 'package:todo_app/utils/style/app_themes.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
