@@ -9,6 +9,7 @@ import 'package:todo_app/providers/task_filter_provider.dart';
 import 'package:todo_app/providers/task_list_provider.dart';
 import 'package:todo_app/ui/widgets/task_item.dart';
 import 'package:todo_app/utils/style/app_themes.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../widgets/custom_header_delegate.dart';
 
@@ -59,13 +60,14 @@ class HomePage extends ConsumerWidget {
                         },
                 ),
                 expandedTitle: Text(
-                  'Мои дела',
+                  AppLocalizations.of(context)!.myTasks,
                   style: textStyle.titleLarge,
                 ),
-                collapsedSubTitle: Text('Выполнено — $countOfTaskString',
+                collapsedSubTitle: Text(
+                    '${AppLocalizations.of(context)!.completed} — $countOfTaskString',
                     style: Theme.of(context).inputDecorationTheme.hintStyle),
                 collapsedTitle: Text(
-                  'Мои дела',
+                  AppLocalizations.of(context)!.myTasks,
                   style: textStyle.titleMedium,
                 ),
                 expandedHeight: 160.0,
@@ -129,7 +131,7 @@ class HomePage extends ConsumerWidget {
                                 padding: const EdgeInsets.symmetric(
                                     vertical: 18.0, horizontal: 8.0 + 40),
                                 child: Text(
-                                  'Новое',
+                                  AppLocalizations.of(context)!.addNew,
                                   style: Theme.of(context)
                                       .inputDecorationTheme
                                       .hintStyle,

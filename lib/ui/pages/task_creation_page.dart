@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
 import 'package:todo_app/models/task_model.dart';
 import 'package:todo_app/models/task_priority.dart';
 import 'package:todo_app/providers/task_list_provider.dart';
 import 'package:todo_app/utils/extensions/extensions.dart';
 import 'package:todo_app/utils/style/app_themes.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class TaskCreationPage extends ConsumerStatefulWidget {
   const TaskCreationPage({super.key});
@@ -58,6 +60,7 @@ class _TaskCreationPageState extends ConsumerState<TaskCreationPage> {
   Widget build(BuildContext context) {
     final textStyle = Theme.of(context).textTheme;
     final colorScheme = Theme.of(context).colorScheme;
+    final locale = Localizations.localeOf(context).languageCode;
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -78,7 +81,7 @@ class _TaskCreationPageState extends ConsumerState<TaskCreationPage> {
                 onPressed: onSave,
                 style: TextButton.styleFrom(
                     padding: const EdgeInsets.symmetric(vertical: 4.0)),
-                child: const Text('СОХРАНИТЬ'),
+                child: Text(AppLocalizations.of(context)!.save),
               ))
         ],
       ),
@@ -112,8 +115,8 @@ class _TaskCreationPageState extends ConsumerState<TaskCreationPage> {
                     autofocus: false,
                     focusNode: _focusNode,
                     scrollPadding: EdgeInsets.zero,
-                    decoration: const InputDecoration(
-                      hintText: 'Что надо сделать...',
+                    decoration: InputDecoration(
+                      hintText: AppLocalizations.of(context)!.whatNeeds,
                     ),
                     controller: _textEditingController,
                   )),
@@ -125,7 +128,8 @@ class _TaskCreationPageState extends ConsumerState<TaskCreationPage> {
                   child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('Важность', style: textStyle.bodyMedium),
+                        Text(AppLocalizations.of(context)!.importance,
+                            style: textStyle.bodyMedium),
                         const SizedBox(height: 4.0),
                         Theme(
                           data: Theme.of(context)
@@ -133,7 +137,8 @@ class _TaskCreationPageState extends ConsumerState<TaskCreationPage> {
                           child: PopupMenuButton(
                             surfaceTintColor: Colors.transparent,
                             position: PopupMenuPosition.over,
-                            tooltip: 'Select the priority',
+                            tooltip:
+                                AppLocalizations.of(context)!.selectThePriority,
                             initialValue: _dropdownValue,
                             itemBuilder: (context) {
                               return _list.map<PopupMenuItem<TaskPriority>>(
@@ -144,7 +149,7 @@ class _TaskCreationPageState extends ConsumerState<TaskCreationPage> {
                                 return PopupMenuItem<TaskPriority>(
                                     value: value,
                                     child: Text(
-                                      value.toReadableString(),
+                                      value.toReadableString(context),
                                       style: textStyle.bodyMedium!
                                           .copyWith(color: textColor),
                                     ));
@@ -163,7 +168,7 @@ class _TaskCreationPageState extends ConsumerState<TaskCreationPage> {
                                         : null;
 
                                 return Text(
-                                  _dropdownValue!.toReadableString(),
+                                  _dropdownValue!.toReadableString(context),
                                   style: textStyle.titleSmall!
                                       .copyWith(color: textColor),
                                 );
@@ -181,13 +186,15 @@ class _TaskCreationPageState extends ConsumerState<TaskCreationPage> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  'Сделать до',
+                                  AppLocalizations.of(context)!.deadline,
                                   style: textStyle.bodyMedium,
                                 ),
                                 if (_selectedDate != null)
                                   InkWell(
                                       onTap: () => _showDatePicker(),
-                                      child: Text(_selectedDate!.toRuLocale(),
+                                      child: Text(
+                                          DateFormat.yMMMMd(locale)
+                                              .format(_selectedDate!),
                                           style: textStyle.labelLarge!.copyWith(
                                               color: colorScheme.primary)))
                               ],
@@ -219,7 +226,7 @@ class _TaskCreationPageState extends ConsumerState<TaskCreationPage> {
                         textStyle: textStyle.bodyMedium,
                         disabledForegroundColor: colorScheme.surface),
                     icon: const Icon(Icons.delete),
-                    label: const Text('Удалить'))),
+                    label: Text(AppLocalizations.of(context)!.delete))),
           ])),
     );
   }
@@ -254,8 +261,8 @@ class _TaskCreationPageState extends ConsumerState<TaskCreationPage> {
       helpText: '',
       initialDatePickerMode: DatePickerMode.day,
       initialEntryMode: DatePickerEntryMode.calendarOnly,
-      confirmText: 'ГОТОВО',
-      cancelText: 'ОТМЕНА',
+      confirmText: AppLocalizations.of(context)!.done,
+      cancelText: AppLocalizations.of(context)!.cancel,
       context: context,
       initialDate: _selectedDate ?? DateTime.now(),
       firstDate: DateTime(2023),
@@ -282,17 +289,17 @@ class _TaskCreationPageState extends ConsumerState<TaskCreationPage> {
         builder: (context) => AlertDialog(
               backgroundColor: Theme.of(context).cardColor,
               title: Text(
-                'Описание пустое',
+                AppLocalizations.of(context)!.emptyDescription,
                 style: Theme.of(context).textTheme.titleMedium,
               ),
               content: Text(
-                'Введите описание задачи',
+                AppLocalizations.of(context)!.enterTheTaskDescription,
                 style: Theme.of(context).textTheme.bodyMedium,
               ),
               actions: [
                 TextButton(
                     onPressed: () => Navigator.pop(context),
-                    child: const Text('ОК'))
+                    child: Text(AppLocalizations.of(context)!.ok))
               ],
             ));
 

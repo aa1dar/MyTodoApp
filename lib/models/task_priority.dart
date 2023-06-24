@@ -1,14 +1,17 @@
+import 'package:flutter/widgets.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 enum TaskPriority { low, normal, high }
 
 extension ConverToString on TaskPriority {
-  String toReadableString() {
+  String toReadableString(BuildContext context) {
     switch (this) {
       case TaskPriority.high:
-        return '!! Высокий';
+        return '!! ${AppLocalizations.of(context)!.high}';
       case TaskPriority.low:
-        return 'Низкий';
+        return AppLocalizations.of(context)!.low;
       case TaskPriority.normal:
-        return 'Нет';
+        return AppLocalizations.of(context)!.basic;
     }
   }
 }

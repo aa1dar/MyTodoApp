@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
 import 'package:todo_app/models/task_priority.dart';
 import 'package:todo_app/navigation/navigation_routes.dart';
 import 'package:todo_app/providers/task_list_provider.dart';
 import 'package:todo_app/ui/pages/task_creation_page.dart';
 import 'package:todo_app/ui/widgets/task_suffix_title_widget.dart';
-import 'package:todo_app/utils/extensions/extensions.dart';
 
 import 'custom_dismissible.dart';
 
@@ -36,6 +36,8 @@ class TaskItem extends ConsumerWidget {
       }
       return null;
     }
+
+    final locale = Localizations.localeOf(context).languageCode;
 
     return ClipRRect(
         borderRadius: const BorderRadius.all(Radius.circular(8.0)),
@@ -118,7 +120,9 @@ class TaskItem extends ConsumerWidget {
                                 ],
                               ),
                               if (task.deadline != null)
-                                Text(task.deadline!.toRuLocale(),
+                                Text(
+                                    DateFormat.yMMMMd(locale)
+                                        .format(task.deadline!),
                                     style: Theme.of(context)
                                         .textTheme
                                         .titleSmall!
