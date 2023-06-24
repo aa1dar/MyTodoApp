@@ -1,5 +1,4 @@
 import 'package:todo_app/models/task_priority.dart';
-
 class TaskModel {
   final String id;
   final String description;
@@ -15,7 +14,6 @@ class TaskModel {
     this.deadline,
   });
 
-  
 
   TaskModel copyWith({
     String? id,
@@ -32,7 +30,6 @@ class TaskModel {
       deadline: deadline ?? this.deadline,
     );
   }
-
 
   @override
   String toString() {

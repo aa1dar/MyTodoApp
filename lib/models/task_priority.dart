@@ -1,4 +1,4 @@
-enum TaskPriority { normal, low, high }
+enum TaskPriority { low, normal, high }
 
 extension ConverToString on TaskPriority {
   String toReadableString() {
