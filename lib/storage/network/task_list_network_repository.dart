@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:todo_app/utils/logger/logger.dart';
 
@@ -7,6 +9,7 @@ import '../dto/task_list_dto.dart';
 
 class TaskListNetworkRepository {
   static const _tag = 'NETWORK_REPOSITORY';
+  static const _pingAddress = 'example.com';
   final ApiService _taskListApi;
 
   TaskListNetworkRepository(this._taskListApi);
@@ -91,6 +94,15 @@ class TaskListNetworkRepository {
         Logger.error(_tag, e.message.toString());
       }
       rethrow;
+    }
+  }
+
+  Future<bool> _hasNetwork() async {
+    try {
+      final result = await InternetAddress.lookup(_pingAddress);
+      return result.isNotEmpty && result[0].rawAddress.isNotEmpty;
+    } on SocketException catch (_) {
+      return false;
     }
   }
 
