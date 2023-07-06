@@ -23,6 +23,9 @@ const String columnTimestamp = 'timestamp';
 class TaskListLocalRepository {
   Database? _db;
 
+  // For mock
+  TaskListLocalRepository([this._db]);
+
   Future open(String path) async {
     _db = await openDatabase(path, version: 1, onCreate: _onCreate);
   }
