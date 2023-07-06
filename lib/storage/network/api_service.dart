@@ -16,7 +16,10 @@ class ApiService {
           receiveTimeout: const Duration(seconds: 10),
           sendTimeout: const Duration(seconds: 10),
           baseUrl: _baseUrl,
-          headers: {'Content-Type': 'application/json'}));
+          headers: {
+            'Content-Type': 'application/json',
+            // 'X-Generate-Fails': '50',
+          }));
       _dio!.interceptors.add(InterceptorsWrapper(
         onRequest: (options, handler) {
           options.headers['Authorization'] = 'Bearer ${Env.apiServiceToken}';
