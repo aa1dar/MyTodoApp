@@ -41,4 +41,4 @@ Before launching it, make sure that deep links are allowed in the Settings
 *  `./adb shell am start -a android.intent.action.VIEW -c android.intent.category.BROWSABLE -d 'http://todoapp.ru/task_creation_page'` 
 
 ## Download
-<a href="https://github.com/aa1dar/MyTodoApp/releases/tag/1.0.1">Tap me )<a>
+<a href="https://github.com/aa1dar/MyTodoApp/releases/tag/1.1.0">Tap me )<a>
