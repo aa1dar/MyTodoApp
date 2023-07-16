@@ -8,4 +8,6 @@ abstract class Env {
   static final String apiServiceToken = _Env.apiServiceToken;
   @EnviedField(varName: 'API_BASE_URL', obfuscate: true)
   static final String apiBaseUrl = _Env.apiBaseUrl;
+
+  static const String appFlavor = String.fromEnvironment('DEFINE_APP_FLAVOR');
 }

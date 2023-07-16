@@ -24,11 +24,7 @@ class MyApp extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final redColor = ref.watch(remoteConfigProvider).redColor;
-    // Color? redColor = config.when<Color?>(
-    //     data: (data) => data.redColor,
-    //     error: (e, stack) => null,
-    //     loading: () => null);
-    print('revuild');
+
     return MaterialApp.router(
         // initialRoute: NavigationRouteName.home,
         // navigatorObservers: [NavigationLogger()],

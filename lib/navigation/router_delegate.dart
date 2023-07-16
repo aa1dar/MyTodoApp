@@ -37,38 +37,38 @@ class AppRouterDelegate extends RouterDelegate<NavigationState>
   @override
   Widget build(BuildContext context) {
     return Navigator(
-      key: navigatorKey,
-      pages: [
-        const MaterialPage(
-          name: NavigationRouteName.home,
-          child: HomePage(),
-        ),
-        if (_state?.isTaskCreationPage == true)
-          const FadeTransitionPage(
-            name: NavigationRouteName.taskCreationPage,
-            child: TaskCreationPage(),
-          ),
-        if (_state?.isTaskDetailPage == true)
-          MaterialPage(
-            name: NavigationRouteName.home,
-            child: TaskCreationPage(
-              taskId: _state!.selectedTaskId,
+          key: navigatorKey,
+          pages: [
+            const MaterialPage(
+              name: NavigationRouteName.home,
+              child: HomePage(),
             ),
-          ),
-        if (_state?.isUnknown == true)
-          const MaterialPage(
-            child: UnknownPage(),
-          ),
-      ],
-      onPopPage: (route, result) {
-        if (!route.didPop(result)) {
-          return false;
-        }
+            if (_state?.isTaskCreationPage == true)
+              const FadeTransitionPage(
+                name: NavigationRouteName.taskCreationPage,
+                child: TaskCreationPage(),
+              ),
+            if (_state?.isTaskDetailPage == true)
+              MaterialPage(
+                name: NavigationRouteName.home,
+                child: TaskCreationPage(
+                  taskId: _state!.selectedTaskId,
+                ),
+              ),
+            if (_state?.isUnknown == true)
+              const MaterialPage(
+                child: UnknownPage(),
+              ),
+          ],
+          onPopPage: (route, result) {
+            if (!route.didPop(result)) {
+              return false;
+            }
 
-        onPop();
-        return true;
-      },
-    );
+            onPop();
+            return true;
+          },
+        );
   }
 
   @override
