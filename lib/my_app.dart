@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:todo_app/l10n/l10n.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:todo_app/providers/remote_config_provider.dart';
 import 'package:todo_app/utils/style/app_themes.dart';
 
 import 'navigation/app_navigation.dart';
@@ -22,6 +23,12 @@ class MyApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final redColor = ref.watch(remoteConfigProvider).redColor;
+    // Color? redColor = config.when<Color?>(
+    //     data: (data) => data.redColor,
+    //     error: (e, stack) => null,
+    //     loading: () => null);
+    print('revuild');
     return MaterialApp.router(
         // initialRoute: NavigationRouteName.home,
         // navigatorObservers: [NavigationLogger()],
@@ -36,7 +43,7 @@ class MyApp extends ConsumerWidget {
           GlobalMaterialLocalizations.delegate,
           GlobalCupertinoLocalizations.delegate,
         ],
-        darkTheme: AppTheme.darkTheme(),
-        theme: AppTheme.lightTheme());
+        darkTheme: AppTheme.getDarkThemeWithRedColor(redColor),
+        theme: AppTheme.getLightThemeWithRedColor(redColor));
   }
 }
