@@ -3,7 +3,8 @@ import 'package:todo_app/navigation/navigation_routes.dart';
 
 import 'navigation_state.dart';
 
-class AppRouteInformationParser extends RouteInformationParser<NavigationState> {
+class AppRouteInformationParser
+    extends RouteInformationParser<NavigationState> {
   @override
   Future<NavigationState> parseRouteInformation(
       RouteInformation routeInformation) async {

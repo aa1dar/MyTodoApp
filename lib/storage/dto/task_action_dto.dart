@@ -7,8 +7,7 @@ part 'task_action_dto.g.dart';
 class TaskActionDto with _$TaskActionDto {
   const factory TaskActionDto(
       {int? id,
-      @ActionTypeConverter()
-      required ActionType action,
+      @ActionTypeConverter() required ActionType action,
       required DateTime timestamp,
       @JsonKey(name: 'task_id') String? taskId}) = _TaskActionDto;
 

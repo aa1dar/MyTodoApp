@@ -49,17 +49,15 @@ abstract class $TaskDtoCopyWith<$Res> {
       {String id,
       String text,
       ImportanceDto importance,
-      @EpochDateTimeConverter()
-          DateTime? deadline,
+      @EpochDateTimeConverter() DateTime? deadline,
       bool done,
       @EpochDateTimeConverter()
       @JsonKey(name: 'created_at')
-          DateTime? createdAt,
+      DateTime? createdAt,
       @EpochDateTimeConverter()
       @JsonKey(name: 'changed_at')
-          DateTime? changedAt,
-      @JsonKey(name: 'last_updated_by')
-          String? lastUpdatedBy});
+      DateTime? changedAt,
+      @JsonKey(name: 'last_updated_by') String? lastUpdatedBy});
 }
 
 /// @nodoc
@@ -132,17 +130,15 @@ abstract class _$$_TaskDtoCopyWith<$Res> implements $TaskDtoCopyWith<$Res> {
       {String id,
       String text,
       ImportanceDto importance,
-      @EpochDateTimeConverter()
-          DateTime? deadline,
+      @EpochDateTimeConverter() DateTime? deadline,
       bool done,
       @EpochDateTimeConverter()
       @JsonKey(name: 'created_at')
-          DateTime? createdAt,
+      DateTime? createdAt,
       @EpochDateTimeConverter()
       @JsonKey(name: 'changed_at')
-          DateTime? changedAt,
-      @JsonKey(name: 'last_updated_by')
-          String? lastUpdatedBy});
+      DateTime? changedAt,
+      @JsonKey(name: 'last_updated_by') String? lastUpdatedBy});
 }
 
 /// @nodoc
@@ -286,20 +282,19 @@ class _$_TaskDto implements _TaskDto {
 
 abstract class _TaskDto implements TaskDto {
   const factory _TaskDto(
-      {required final String id,
-      required final String text,
-      required final ImportanceDto importance,
-      @EpochDateTimeConverter()
-          final DateTime? deadline,
-      required final bool done,
-      @EpochDateTimeConverter()
-      @JsonKey(name: 'created_at')
+          {required final String id,
+          required final String text,
+          required final ImportanceDto importance,
+          @EpochDateTimeConverter() final DateTime? deadline,
+          required final bool done,
+          @EpochDateTimeConverter()
+          @JsonKey(name: 'created_at')
           final DateTime? createdAt,
-      @EpochDateTimeConverter()
-      @JsonKey(name: 'changed_at')
+          @EpochDateTimeConverter()
+          @JsonKey(name: 'changed_at')
           final DateTime? changedAt,
-      @JsonKey(name: 'last_updated_by')
-          final String? lastUpdatedBy}) = _$_TaskDto;
+          @JsonKey(name: 'last_updated_by') final String? lastUpdatedBy}) =
+      _$_TaskDto;
 
   factory _TaskDto.fromJson(Map<String, dynamic> json) = _$_TaskDto.fromJson;
 

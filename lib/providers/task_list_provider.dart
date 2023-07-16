@@ -71,7 +71,7 @@ class TaskList extends StateNotifier<TodoTaskList> {
     ref.read(taskRepositoryProvider).toogle(id).then((model) => ref
         .read(analyticsServiceProvider)
         .logCompletionOfTask(id, model?.isCompleted));
-        
+
     state = TodoTaskList(data: [
       for (final todo in state.data)
         if (todo.id == id)

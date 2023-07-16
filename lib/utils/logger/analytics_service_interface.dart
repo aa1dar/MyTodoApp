@@ -1,6 +1,6 @@
 abstract class IAnalyticsService {
   Future<void> logEvent(String name, Map<String, String> parameters);
-  
+
   Future<void> logNavigation(String screenName,
       {bool didPush = false, bool didPop = false});
 

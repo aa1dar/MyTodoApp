@@ -11,9 +11,7 @@ class FadeTransitionPage extends Page {
       settings: this,
       pageBuilder: (BuildContext context, Animation<double> animation,
           Animation<double> secondaryAnimation) {
-        return FadeTransition(
-            opacity: animation,
-            child: child);
+        return FadeTransition(opacity: animation, child: child);
       },
     );
   }
