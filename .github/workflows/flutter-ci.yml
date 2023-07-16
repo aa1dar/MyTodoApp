@@ -18,7 +18,7 @@ jobs:
         env:
           dotenv: ${{ secrets.DOTENV }}
         run: echo "$dotenv" > ".env"
-      - run: flutter pub run build_runner build
+      - run: flutter pub run build_runner build --delete-conflicting-outputs
       - run: flutter analyze
       - run: dart format --set-exit-if-changed .
   test:
@@ -37,7 +37,7 @@ jobs:
         env:
           dotenv: ${{ secrets.DOTENV }}
         run: echo "$dotenv" > ".env"
-      - run: flutter pub run build_runner build
+      - run: flutter pub run build_runner build --delete-conflicting-outputs
       - run: flutter test
         id: test
       - if: ${{ failure() && steps.test.conclusion == 'failure' }}
@@ -75,5 +75,5 @@ jobs:
         env:
           dotenv: ${{ secrets.DOTENV }}
         run: echo "$dotenv" > ".env"
-      - run: flutter pub run build_runner build
+      - run: flutter pub run build_runner build --delete-conflicting-outputs
       - run: flutter build apk --dart-define="DEFINE_APP_FLAVOR=prod"
