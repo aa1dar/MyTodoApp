@@ -1,7 +1,8 @@
 abstract class NavigationRouteName {
-  static const home = '';
+  static const home = 'home';
   static const taskCreationPage = 'task_creation_page';
   static const taskEditingPage = 'task_editing_page';
+  static const unknownPage = 'unknown';
 }
 
 // abstract class NavigationRoutesBuilder {

@@ -2,10 +2,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:todo_app/models/task_model.dart';
 import 'package:todo_app/models/task_priority.dart';
 import 'package:todo_app/models/todo_task_list.dart';
+import 'package:todo_app/providers/analytics_service_provider.dart';
 import 'package:todo_app/providers/loading_state_provider.dart';
 import 'package:todo_app/providers/task_repository_provider.dart';
 import 'package:todo_app/utils/constants/provider_names.dart';
-
 
 final taskProvider = Provider<TaskModel>((ref) {
   return const TaskModel(id: '', description: '');
@@ -40,6 +40,7 @@ class TaskList extends StateNotifier<TodoTaskList> {
 
     if (newModel != null) {
       state = TodoTaskList(data: [...state.data, newModel]);
+      ref.read(analyticsServiceProvider).logCreationOfTask(newModel.id);
     }
 
     ref.read(isLoadingTasksProvider.notifier).state = false;
@@ -59,6 +60,7 @@ class TaskList extends StateNotifier<TodoTaskList> {
 
   void delete(String id) {
     ref.read(taskRepositoryProvider).delete(id);
+    ref.read(analyticsServiceProvider).logDeletionOfTask(id);
     state = TodoTaskList(data: [
       for (final todo in state.data)
         if (todo.id != id) todo
@@ -66,7 +68,10 @@ class TaskList extends StateNotifier<TodoTaskList> {
   }
 
   void toogle(String id) {
-    ref.read(taskRepositoryProvider).toogle(id);
+    ref.read(taskRepositoryProvider).toogle(id).then((model) => ref
+        .read(analyticsServiceProvider)
+        .logCompletionOfTask(id, model?.isCompleted));
+        
     state = TodoTaskList(data: [
       for (final todo in state.data)
         if (todo.id == id)
