@@ -51,7 +51,7 @@ jobs:
           name: test-failures
           path: test/failures
           retention-days: 2
-  build:
+  build_and_release:
     needs: [analyze, test]
     timeout-minutes: 10
     runs-on: ubuntu-latest
@@ -81,3 +81,14 @@ jobs:
         run: echo "$dotenv" > ".env"
       - run: flutter pub run build_runner build --delete-conflicting-outputs
       - run: flutter build apk --dart-define="DEFINE_APP_FLAVOR=prod"
+      - uses: actions/upload-artifact@v1
+        with:
+          name: release-apk
+          path: build/app/outputs/apk/release/app-release.apk
+      - name: upload artifact to Firebase App Distribution
+        uses: wzieba/Firebase-Distribution-Github-Action@v1
+        with:
+            appId: ${{secrets.APP_ID}}
+            token: ${{secrets.FIREBASE_TOKEN}}
+            groups: app-testers
+            file: build/app/outputs/apk/release/app-release.apk
