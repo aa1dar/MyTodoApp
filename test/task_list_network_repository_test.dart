@@ -47,9 +47,9 @@ void main() {
         text: 'blablabla',
         importance: ImportanceDto.important,
         done: true,
-        deadline: DateTime.parse('1970-01-20 16:03:30.709'),
-        createdAt: DateTime.parse('1970-01-20 16:03:30.709'),
-        changedAt: DateTime.parse('1970-01-20 16:03:30.709'),
+        deadline: DateTime.parse('1970-01-20 16:03:30.709').toLocal(),
+        createdAt: DateTime.parse('1970-01-20 16:03:30.709').toLocal(),
+        changedAt: DateTime.parse('1970-01-20 16:03:30.709').toLocal(),
         lastUpdatedBy: '111')
   ], revision: 1);
 
