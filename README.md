@@ -28,6 +28,10 @@
 When dev flavor is used, a line is added to the app icon and a banner is added to the main page of the app
 * Added Firebase Crashlytics
 * Added Firebase Analytics
+* Added Github CI workflow
+* Connected to Firebase Distribution
+  #### Firebase Distribution invitation sample
+    <img src="screenshots/firebase_invitation.png" width="200" />
 
 ## How to run in debug
 * Go to `lib/env.dart `
@@ -47,4 +51,4 @@ Before launching it, make sure that deep links are allowed in the Settings
 *  `./adb shell am start -a android.intent.action.VIEW -c android.intent.category.BROWSABLE -d 'http://todoapp.ru/task_creation_page'` 
 
 ## Download
-<a href="https://github.com/aa1dar/MyTodoApp/releases/tag/1.1.0">Tap me )<a>
+<a href="https://github.com/aa1dar/MyTodoApp/releases/tag/1.2.0">Tap me )<a>
