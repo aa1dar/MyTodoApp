@@ -198,4 +198,24 @@ class AppTheme {
           cursorColor: AppColor.supportDarkSeparator,
           selectionColor: AppColor.colorDarkGrayLight,
           selectionHandleColor: AppColor.colorLightGray));
+
+  static ThemeData getLightThemeWithRedColor(Color? redColor) {
+    if (redColor == null) {
+      return lightTheme();
+    } else {
+      return AppTheme.lightTheme().copyWith(
+          colorScheme:
+              AppTheme.lightTheme().colorScheme.copyWith(error: redColor));
+    }
+  }
+
+  static ThemeData getDarkThemeWithRedColor(Color? redColor) {
+    if (redColor == null) {
+      return darkTheme();
+    } else {
+      return AppTheme.darkTheme().copyWith(
+          colorScheme:
+              AppTheme.darkTheme().colorScheme.copyWith(error: redColor));
+    }
+  }
 }

@@ -1,26 +1,41 @@
+import 'dart:ui';
+
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:todo_app/navigation/navigation_logger.dart';
-import 'package:todo_app/navigation/navigation_routes.dart';
-import 'package:todo_app/providers/logger_provider.dart';
-import 'package:todo_app/utils/style/app_themes.dart';
+import 'package:todo_app/firebase_options.dart';
+import 'package:todo_app/providers/remote_config_provider.dart';
+import 'package:todo_app/utils/logger/logger.dart';
 
-void main() {
-  runApp(ProviderScope(observers: [LoggerProvider()], child: const MyApp()));
+import 'my_app.dart';
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await _initFirebase();
+  _initFirebaseCrashlytics();
+  // Init remote configs
+  final container = ProviderContainer();
+  await container.read(remoteConfigProvider).init();
+  runApp(UncontrolledProviderScope(container: container, child: MyApp()));
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+Future<void> _initFirebase() async {
+  Logger.info('FIREBASE', 'Firebase initialization was started');
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+}
 
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-        initialRoute: NavigationRouteName.home,
-        routes: NavigationRoutesBuilder.routes,
-        navigatorObservers: [NavigationLogger()],
-        debugShowCheckedModeBanner: false,
-        title: 'Todo App',
-        darkTheme: AppTheme.darkTheme(),
-        theme: AppTheme.lightTheme());
-  }
+void _initFirebaseCrashlytics() {
+  FlutterError.onError = (errorDetails) {
+    Logger.error('CRASHLYTICS', 'Caught an error by FlutterError.onError');
+    FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails);
+  };
+
+  PlatformDispatcher.instance.onError = (error, stack) {
+    Logger.error('CRASHLYTICS', 'Caught an error by PlatformDispatcher');
+    FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
+    return true;
+  };
 }

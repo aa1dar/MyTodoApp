@@ -7,15 +7,13 @@ class TaskModel {
   final TaskPriority priority;
   final DateTime? deadline;
 
-  TaskModel({
+  const TaskModel({
     required this.id,
     required this.description,
     this.isCompleted = false,
     this.priority = TaskPriority.normal,
     this.deadline,
   });
-
-  
 
   TaskModel copyWith({
     String? id,
@@ -32,7 +30,6 @@ class TaskModel {
       deadline: deadline ?? this.deadline,
     );
   }
-
 
   @override
   String toString() {

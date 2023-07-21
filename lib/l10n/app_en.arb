@@ -1,0 +1,20 @@
+{
+  "save": "SAVE",
+  "whatNeeds": "What needs to be done..",
+  "importance": "Importance",
+  "selectThePriority": "Select the priority",
+  "deadline": "Deadline",
+  "delete": "Delete",
+  "done": "DONE",
+  "cancel": "CANCEL",
+  "emptyDescription": "The description is empty",
+  "enterTheTaskDescription": "Enter a description of the task",
+  "ok": "OK",
+  "completed": "Completed",
+  "myTasks": "My tasks",
+  "addNew": "New",
+  "high": "High",
+  "low": "Low",
+  "basic" : "Basic",
+  "unknownRoute" : "Unknown route"
+}
