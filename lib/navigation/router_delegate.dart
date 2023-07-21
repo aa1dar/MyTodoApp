@@ -1,17 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:todo_app/navigation/fade_transition_page.dart';
 import 'package:todo_app/navigation/navigation_routes.dart';
+import 'package:todo_app/providers/analytics_service_provider.dart';
 import 'package:todo_app/ui/pages/home_page.dart';
 import 'package:todo_app/ui/pages/task_creation_page.dart';
 import 'package:todo_app/ui/pages/unknown_page.dart';
+import 'package:todo_app/utils/logger/logger.dart';
 
+import 'app_navigation.dart';
 import 'navigation_state.dart';
 
 class AppRouterDelegate extends RouterDelegate<NavigationState>
-    with ChangeNotifier, PopNavigatorRouterDelegateMixin<NavigationState> {
+    with ChangeNotifier, PopNavigatorRouterDelegateMixin<NavigationState>
+    implements AppNavigation {
   @override
   final GlobalKey<NavigatorState> navigatorKey;
 
-  AppRouterDelegate() : navigatorKey = GlobalKey<NavigatorState>();
+  final Ref ref;
+
+  static const _tag = 'NAVIGATION';
+
+  AppRouterDelegate(
+    this.ref,
+  ) : navigatorKey = GlobalKey<NavigatorState>() {
+    ref.read(analyticsServiceProvider).logNavigation(NavigationRouteName.home);
+  }
 
   NavigationState? _state;
 
@@ -25,23 +39,19 @@ class AppRouterDelegate extends RouterDelegate<NavigationState>
     return Navigator(
       key: navigatorKey,
       pages: [
-        MaterialPage(
+        const MaterialPage(
           name: NavigationRouteName.home,
-          child: HomePage(
-              onTaskTap: _showTaskEditingPage,
-              onTapCreateNewTask: _showTaskCreationPage),
+          child: HomePage(),
         ),
         if (_state?.isTaskCreationPage == true)
-          MaterialPage(
+          const FadeTransitionPage(
             name: NavigationRouteName.taskCreationPage,
-            child: TaskCreationPage(
-                onTapBack: _returnToRootPage),
+            child: TaskCreationPage(),
           ),
         if (_state?.isTaskDetailPage == true)
           MaterialPage(
             name: NavigationRouteName.home,
             child: TaskCreationPage(
-              onTapBack: _returnToRootPage,
               taskId: _state!.selectedTaskId,
             ),
           ),
@@ -55,9 +65,7 @@ class AppRouterDelegate extends RouterDelegate<NavigationState>
           return false;
         }
 
-        _state = NavigationState.root();
-
-        notifyListeners();
+        onPop();
         return true;
       },
     );
@@ -69,23 +77,51 @@ class AppRouterDelegate extends RouterDelegate<NavigationState>
     notifyListeners();
   }
 
-  void _showTaskEditingPage(String taskId) {
+  @override
+  void showTaskEditingPage(String taskId) {
+    Logger.info(_tag, 'Task editing page was opened (taskId: $taskId)');
+    ref
+        .read(analyticsServiceProvider)
+        .logNavigation(NavigationRouteName.taskEditingPage, didPush: true);
+
     _state = NavigationState.taskEditing(taskId);
     notifyListeners();
   }
 
-  void _showTaskCreationPage() {
+  @override
+  void showTaskCreationPage() {
+    Logger.info(_tag, 'Task creation page was opened');
+    ref
+        .read(analyticsServiceProvider)
+        .logNavigation(NavigationRouteName.taskCreationPage, didPush: true);
+
     _state = NavigationState.taskCreation();
     notifyListeners();
   }
 
-  void _returnToRootPage() {
+  @override
+  void returnToRootPage() {
+    Logger.info(_tag, 'The user returned to the root page');
+    ref
+        .read(analyticsServiceProvider)
+        .logNavigation(NavigationRouteName.home, didPop: true);
+
     _state = NavigationState.root();
     notifyListeners();
   }
 
-  void _showUndefinedTaskPage() {
+  @override
+  void showUndefinedTaskPage() {
+    Logger.info(_tag, 'The unknow page was opened');
+
+    ref
+        .read(analyticsServiceProvider)
+        .logNavigation(NavigationRouteName.unknownPage, didPush: true);
+
     _state = NavigationState.unknown();
     notifyListeners();
   }
+
+  @override
+  void onPop() => returnToRootPage();
 }

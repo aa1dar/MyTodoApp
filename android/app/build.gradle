@@ -22,9 +22,28 @@ if (flutterVersionName == null) {
 }
 
 apply plugin: 'com.android.application'
+// START: FlutterFire Configuration
+apply plugin: 'com.google.gms.google-services'
+apply plugin: 'com.google.firebase.crashlytics'
+// END: FlutterFire Configuration
 apply plugin: 'kotlin-android'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
-
+def dartEnvironmentVariables = [
+        DEFINE_APP_FLAVOR: 'prod',
+];
+if (project.hasProperty('dart-defines')) {
+    dartEnvironmentVariables = dartEnvironmentVariables + project.property('dart-defines')
+            .split(',')
+            .collectEntries { entry ->
+                def pair = new String(entry.decodeBase64(), 'UTF-8').split('=')
+                [(pair.first()): pair.last()]
+            }
+    if (dartEnvironmentVariables.DEFINE_APP_FLAVOR == 'prod') {
+        dartEnvironmentVariables.put("DEFINE_ICON", "ic_launcher")
+    } else {
+        dartEnvironmentVariables.put("DEFINE_ICON", "ic_launcher_dev")
+    }
+}
 android {
     namespace "com.example.todo_app"
     compileSdkVersion flutter.compileSdkVersion
@@ -48,10 +67,11 @@ android {
         applicationId "com.example.todo_app"
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-gradle-build-configuration.
-        minSdkVersion flutter.minSdkVersion
+        minSdkVersion 19
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
+        manifestPlaceholders.iconPath = dartEnvironmentVariables.DEFINE_ICON
     }
 
     buildTypes {

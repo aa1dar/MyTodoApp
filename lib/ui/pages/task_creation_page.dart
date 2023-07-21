@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:todo_app/my_app.dart';
 import 'package:todo_app/models/task_model.dart';
 import 'package:todo_app/models/task_priority.dart';
+import 'package:todo_app/navigation/app_navigation.dart';
 import 'package:todo_app/providers/change_task_provider.dart';
 import 'package:todo_app/providers/task_list_provider.dart';
 import 'package:todo_app/ui/pages/unknown_page.dart';
@@ -11,11 +13,9 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class TaskCreationPage extends ConsumerStatefulWidget {
   const TaskCreationPage({
-    required this.onTapBack,
     this.taskId,
     super.key,
   });
-  final Function() onTapBack;
   final String? taskId;
 
   @override
@@ -53,7 +53,7 @@ class _TaskCreationPageState extends ConsumerState<TaskCreationPage> {
 
   void _subsribeOnDataLoading() {
     ref.listen(changeTaskListProvider(widget.taskId), (prev, next) {
-      // TODO: Get rid of this workaround and put all logic of this page 
+      // TODO: Get rid of this workaround and put all logic of this page
       // to the StateNotifierProvider
       if (prev?.isLoading == true && !next.isLoading) {
         if (!next.isUndefinedIndex) {
@@ -102,7 +102,8 @@ class _TaskCreationPageState extends ConsumerState<TaskCreationPage> {
               color: Theme.of(context).primaryIconTheme.color,
             ),
             splashRadius: AppTheme.appBarIconSplashRadius,
-            onPressed: widget.onTapBack,
+            onPressed: () =>
+                ref.read<AppNavigation>(navigationProvider).returnToRootPage(),
           ),
           actions: [
             Padding(
@@ -280,7 +281,7 @@ class _TaskCreationPageState extends ConsumerState<TaskCreationPage> {
 
   void onDelete() {
     ref.read(taskListProvider.notifier).delete(_editingTaskId!);
-    Navigator.pop(context);
+    ref.read(navigationProvider).onPop();
   }
 
   void onSave() {
@@ -300,7 +301,7 @@ class _TaskCreationPageState extends ConsumerState<TaskCreationPage> {
           deadline: _selectedDate);
     }
 
-    Navigator.pop(context);
+    ref.read(navigationProvider).onPop();
   }
 
   void _showDatePicker() async {

@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http_mock_adapter/http_mock_adapter.dart';
 import 'package:todo_app/storage/network/api_service.dart';
+
 void main() {
   late ApiService apiService;
   late Dio dioClient;
@@ -14,7 +15,8 @@ void main() {
     apiService = ApiService(dioClient);
   });
 
-  test('should throw an ArgumentError when the server did not return status \'ok\'',
+  test(
+      'should throw an ArgumentError when the server did not return status \'ok\'',
       () async {
     // arrange
     dioAdapter.onGet(

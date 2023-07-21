@@ -23,15 +23,25 @@
 * Prioritize tasks
 * Set a deadline for the task
 
-## New features (06.07.2023)
-* Added task synchronization
-* Added deeplinks
-* Added Unit-tests
-* Changed navigator to Navigator 2.0
+## New features (17.07.2023)
+* Added 'prod' and 'dev' flavors\
+When dev flavor is used, a line is added to the app icon and a banner is added to the main page of the app
+* Added Firebase Crashlytics
+* Added Firebase Analytics
+* Added Github CI workflow
+* Connected to Firebase Distribution
+  #### Firebase Distribution invitation sample
+    <img src="screenshots/firebase_invitation.png" width="200" />
 
 ## How to run in debug
 * Go to `lib/env.dart `
 * Redefine `apiBaseUrl` and `apiServiceToken` variables (Actually `apiBaseUrl` is a base url + path, e.g. `https://baseurl/path`)
+
+## How to run via 'dev' flavor
+* `flutter run "--dart-define="DEFINE_APP_FLAVOR=dev"`
+
+## How to run via 'prod' flavor(default)
+* `flutter run "--dart-define="DEFINE_APP_FLAVOR=prod"`
 
 ## Some adb commands to check the Deeplinks
 Before launching it, make sure that deep links are allowed in the Settings
@@ -41,4 +51,4 @@ Before launching it, make sure that deep links are allowed in the Settings
 *  `./adb shell am start -a android.intent.action.VIEW -c android.intent.category.BROWSABLE -d 'http://todoapp.ru/task_creation_page'` 
 
 ## Download
-<a href="https://github.com/aa1dar/MyTodoApp/releases/tag/1.1.0">Tap me )<a>
+<a href="https://github.com/aa1dar/MyTodoApp/releases/tag/1.2.0">Tap me )<a>

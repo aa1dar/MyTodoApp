@@ -1,38 +1,41 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:todo_app/l10n/l10n.dart';
-import 'package:todo_app/navigation/route_information_parser.dart';
-import 'package:todo_app/navigation/router_delegate.dart';
-import 'package:todo_app/providers/logger_provider.dart';
-import 'package:todo_app/utils/style/app_themes.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'dart:ui';
 
-void main() {
-  runApp(ProviderScope(observers: [LoggerProvider()], child: MyApp()));
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:todo_app/firebase_options.dart';
+import 'package:todo_app/providers/remote_config_provider.dart';
+import 'package:todo_app/utils/logger/logger.dart';
+
+import 'my_app.dart';
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await _initFirebase();
+  _initFirebaseCrashlytics();
+  // Init remote configs
+  final container = ProviderContainer();
+  await container.read(remoteConfigProvider).init();
+  runApp(UncontrolledProviderScope(container: container, child: MyApp()));
 }
 
-class MyApp extends StatelessWidget {
-  MyApp({super.key});
-  final _routerDeleage = AppRouterDelegate();
-  final _routeInformationParser = AppRouteInformationParser();
+Future<void> _initFirebase() async {
+  Logger.info('FIREBASE', 'Firebase initialization was started');
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+}
 
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp.router(
-        // initialRoute: NavigationRouteName.home,
-        // navigatorObservers: [NavigationLogger()],
-        routeInformationParser: _routeInformationParser,
-        routerDelegate: _routerDeleage,
-        debugShowCheckedModeBanner: false,
-        title: 'Todo App',
-        supportedLocales: L10n.all,
-        localizationsDelegates: const [
-          AppLocalizations.delegate,
-          GlobalMaterialLocalizations.delegate,
-          GlobalCupertinoLocalizations.delegate,
-        ],
-        darkTheme: AppTheme.darkTheme(),
-        theme: AppTheme.lightTheme());
-  }
+void _initFirebaseCrashlytics() {
+  FlutterError.onError = (errorDetails) {
+    Logger.error('CRASHLYTICS', 'Caught an error by FlutterError.onError');
+    FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails);
+  };
+
+  PlatformDispatcher.instance.onError = (error, stack) {
+    Logger.error('CRASHLYTICS', 'Caught an error by PlatformDispatcher');
+    FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
+    return true;
+  };
 }

@@ -11,7 +11,7 @@ class ApiService {
   Dio? _dio;
 
   // For mock
-  ApiService([this._dio]); 
+  ApiService([this._dio]);
 
   Dio get _dioGetter {
     if (_dio == null) {
