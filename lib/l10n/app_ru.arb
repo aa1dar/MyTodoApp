@@ -1,0 +1,20 @@
+{
+  "save": "СОХРАНИТЬ",
+  "whatNeeds": "Что надо сделать...",
+  "importance": "Важность",
+  "selectThePriority": "Select the priority",
+  "deadline": "Сделать до",
+  "delete": "Удалить",
+  "done": "ГОТОВО",
+  "cancel": "ОТМЕНА",
+  "emptyDescription": "Описание пустое",
+  "enterTheTaskDescription": "Введите описание задачи",
+  "ok": "OK",
+  "completed": "Выполнено",
+  "myTasks": "Мои дела",
+  "addNew": "Новое",
+  "high": "Высокий",
+  "low": "Низкий",
+  "basic" : "Нет",
+  "unknownRoute" : "Неизвестный маршрут"
+}

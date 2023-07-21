@@ -34,5 +34,4 @@ class AppColor {
   static const backDarkPrimary = Color(0xFF161618);
   static const backDarkSecondary = Color(0xFF252528);
   static const backDarkElevated = Color(0xFF3C3C3F);
-
 }
