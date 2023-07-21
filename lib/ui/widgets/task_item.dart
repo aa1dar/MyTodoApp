@@ -2,15 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:todo_app/models/task_priority.dart';
-import 'package:todo_app/navigation/navigation_routes.dart';
 import 'package:todo_app/providers/task_list_provider.dart';
-import 'package:todo_app/ui/pages/task_creation_page.dart';
 import 'package:todo_app/ui/widgets/task_suffix_title_widget.dart';
 
 import 'custom_dismissible.dart';
 
 class TaskItem extends ConsumerWidget {
-  const TaskItem({super.key});
+  const TaskItem({required this.onTaskTap, super.key});
+  final void Function(String itemId) onTaskTap;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -75,17 +74,7 @@ class TaskItem extends ConsumerWidget {
                     }),
                 Expanded(
                   child: InkWell(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (_) => ProviderScope(overrides: [
-                                    taskProvider.overrideWithValue(task)
-                                  ], child: const TaskCreationPage()),
-                              settings: const RouteSettings(
-                                  name: NavigationRouteName.taskCreationPage)),
-                        );
-                      },
+                      onTap: () => onTaskTap(task.id),
                       child: Padding(
                           padding: const EdgeInsets.symmetric(vertical: 8),
                           child: Column(

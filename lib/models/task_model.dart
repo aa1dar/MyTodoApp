@@ -1,4 +1,5 @@
 import 'package:todo_app/models/task_priority.dart';
+
 class TaskModel {
   final String id;
   final String description;
@@ -6,14 +7,13 @@ class TaskModel {
   final TaskPriority priority;
   final DateTime? deadline;
 
-  TaskModel({
+  const TaskModel({
     required this.id,
     required this.description,
     this.isCompleted = false,
     this.priority = TaskPriority.normal,
     this.deadline,
   });
-
 
   TaskModel copyWith({
     String? id,

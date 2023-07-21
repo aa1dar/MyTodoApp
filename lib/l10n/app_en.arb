@@ -15,5 +15,6 @@
   "addNew": "New",
   "high": "High",
   "low": "Low",
-  "basic" : "Basic"
+  "basic" : "Basic",
+  "unknownRoute" : "Unknown route"
 }

@@ -8,7 +8,7 @@ import 'package:todo_app/utils/constants/provider_names.dart';
 
 
 final taskProvider = Provider<TaskModel>((ref) {
-  return TaskModel(id: '', description: '');
+  return const TaskModel(id: '', description: '');
 });
 
 final taskListProvider = StateNotifierProvider<TaskList, TodoTaskList>((ref) {

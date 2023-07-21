@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sliver_tools/sliver_tools.dart';
-import 'package:todo_app/navigation/navigation_routes.dart';
 import 'package:todo_app/providers/count_of_task_provider.dart';
 import 'package:todo_app/providers/filtered_task_list_provider.dart';
 import 'package:todo_app/providers/loading_state_provider.dart';
@@ -14,7 +13,11 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../widgets/custom_header_delegate.dart';
 
 class HomePage extends ConsumerWidget {
-  const HomePage({super.key});
+  const HomePage(
+      {required this.onTapCreateNewTask, required this.onTaskTap, super.key});
+
+  final void Function() onTapCreateNewTask;
+  final void Function(String itemId) onTaskTap;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -35,8 +38,7 @@ class HomePage extends ConsumerWidget {
 
     return Scaffold(
         floatingActionButton: FloatingActionButton(
-          onPressed:
-              isLoading ? null : () => _navigateToTaskCreationPage(context),
+          onPressed: isLoading ? null : onTapCreateNewTask,
           child: const Icon(
             Icons.add,
           ),
@@ -118,7 +120,7 @@ class HomePage extends ConsumerWidget {
                                       .watch(filteredTaskListProvider)
                                       .data[index])
                                 ],
-                                child: const TaskItem(),
+                                child: TaskItem(onTaskTap: onTaskTap),
                               );
                             })),
                     SliverPositioned(
@@ -126,7 +128,7 @@ class HomePage extends ConsumerWidget {
                         left: horizontalPadding,
                         right: horizontalPadding,
                         child: InkWell(
-                            onTap: () => _navigateToTaskCreationPage(context),
+                            onTap: onTapCreateNewTask,
                             child: Padding(
                                 padding: const EdgeInsets.symmetric(
                                     vertical: 18.0, horizontal: 8.0 + 40),
@@ -141,8 +143,8 @@ class HomePage extends ConsumerWidget {
         ]));
   }
 
-  void _navigateToTaskCreationPage(BuildContext context) {
-    Navigator.pushNamed(context, NavigationRouteName.taskCreationPage);
+  void _navigateToTaskCreationPage(_) {
+    onTapCreateNewTask.call();
   }
 
   static const horizontalPadding = 8.0;

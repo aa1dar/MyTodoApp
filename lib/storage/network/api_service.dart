@@ -10,10 +10,19 @@ class ApiService {
 
   Dio? _dio;
 
+  // For mock
+  ApiService([this._dio]); 
+
   Dio get _dioGetter {
     if (_dio == null) {
       _dio = Dio(BaseOptions(
-          baseUrl: _baseUrl, headers: {'Content-Type': 'application/json'}));
+          receiveTimeout: const Duration(seconds: 10),
+          sendTimeout: const Duration(seconds: 10),
+          baseUrl: _baseUrl,
+          headers: {
+            'Content-Type': 'application/json',
+            // 'X-Generate-Fails': '50',
+          }));
       _dio!.interceptors.add(InterceptorsWrapper(
         onRequest: (options, handler) {
           options.headers['Authorization'] = 'Bearer ${Env.apiServiceToken}';
